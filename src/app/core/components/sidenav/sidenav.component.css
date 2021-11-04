@@ -1,0 +1,21 @@
+.mat-drawer-container[fullscreen] {
+  top: 64px;
+}
+.title {
+  font-weight: 500;
+}
+.cursor-icon {
+  cursor: pointer;
+}
+.menu-disabled {
+  cursor: default;
+  background-color: #cccccc54;
+}
+mat-icon {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+span {
+  width: 150px;
+}

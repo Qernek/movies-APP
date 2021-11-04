@@ -1,0 +1,30 @@
+<mat-sidenav-container fullscreen>
+  <mat-sidenav [fixedInViewport]="true" #sidenav mode="over" opened="false">
+    <mat-list role="list">
+      <mat-list-item role="listitem"
+        ><span class="title">Menú</span>
+        <mat-icon class="cursor-icon" (click)="closeSidenav()">clear</mat-icon>
+      </mat-list-item>
+
+      <mat-list-item class="cursor-icon" role="listitem"
+        ><span>Películas</span>
+        <mat-icon>trending_flat</mat-icon>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+
+      <mat-list-item class="menu-disabled" role="listitem">
+        <span>Actores</span>
+        <mat-icon>trending_flat</mat-icon>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+
+      <mat-list-item class="menu-disabled" role="listitem">
+        <span>Estudios</span> <mat-icon>trending_flat</mat-icon>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <p>content webpage</p>
+  </mat-sidenav-content>
+</mat-sidenav-container>
