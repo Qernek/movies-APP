@@ -7,6 +7,8 @@ import { SidenavService } from '../../services/sidenav/sidenav.service';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
+  pageTitle: string;
+
   constructor(private sidenav: SidenavService) {}
 
   ngOnInit(): void {}

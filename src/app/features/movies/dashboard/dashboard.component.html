@@ -1,0 +1,17 @@
+<div
+  class="grid-container"
+  fxLayout.xs="column"
+  fxLayout="row wrap"
+  fxLayoutGap="10px"
+  ngClass.gt-xs="ml-10"
+>
+  <div
+    fxLayoutAlign="space-around center"
+    fxFlex.sm="0 1 calc(50%-20px)"
+    fxFlex.md="0 1 calc(33%-20px)"
+    fxFlex.gt-md="0 1 calc(25%-20px)"
+    *ngFor="let card of cardData"
+  >
+    <app-cards [card]="card" class="cards-margin"></app-cards>
+  </div>
+</div>
