@@ -6,6 +6,7 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { AppComponent } from './components/base/app.component';
 import { RouterModule } from '@angular/router';
 import { MaterialsModule } from './modules/materials.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,6 @@ import { MaterialsModule } from './modules/materials.module';
     SidenavComponent,
   ],
   exports: [],
-  imports: [CommonModule, RouterModule, MaterialsModule],
+  imports: [CommonModule, RouterModule, MaterialsModule, TranslateModule],
 })
 export class CoreModule {}

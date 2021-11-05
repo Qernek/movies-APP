@@ -1,0 +1,9 @@
+<mat-card class="card-container">
+  <mat-card-header>
+    <mat-card-title>{{ card.title }}</mat-card-title>
+  </mat-card-header>
+  <img mat-card-image [src]="card.poster" alt="image of movie" />
+  <mat-card-content>
+    <span *ngFor="let genre of card.genre; let i = index"> #{{ genre }}</span>
+  </mat-card-content>
+</mat-card>

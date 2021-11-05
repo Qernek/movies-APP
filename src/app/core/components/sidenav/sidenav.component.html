@@ -2,29 +2,34 @@
   <mat-sidenav [fixedInViewport]="true" #sidenav mode="over" opened="false">
     <mat-list role="list">
       <mat-list-item role="listitem"
-        ><span class="title">Menú</span>
+        ><span class="title">{{ "sidenav.title" | translate }}</span>
         <mat-icon class="cursor-icon" (click)="closeSidenav()">clear</mat-icon>
       </mat-list-item>
 
-      <mat-list-item class="cursor-icon" role="listitem"
-        ><span>Películas</span>
+      <mat-list-item
+        [routerLink]="['/movies']"
+        class="cursor-icon"
+        role="listitem"
+        (click)="closeSidenav()"
+        ><span>{{ "sidenav.movies" | translate }}</span>
         <mat-icon>trending_flat</mat-icon>
       </mat-list-item>
       <mat-divider></mat-divider>
 
       <mat-list-item class="menu-disabled" role="listitem">
-        <span>Actores</span>
+        <span>{{ "sidenav.actors" | translate }}</span>
         <mat-icon>trending_flat</mat-icon>
       </mat-list-item>
       <mat-divider></mat-divider>
 
       <mat-list-item class="menu-disabled" role="listitem">
-        <span>Estudios</span> <mat-icon>trending_flat</mat-icon>
+        <span>{{ "sidenav.companies" | translate }}</span>
+        <mat-icon>trending_flat</mat-icon>
       </mat-list-item>
       <mat-divider></mat-divider>
     </mat-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <p>content webpage</p>
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
