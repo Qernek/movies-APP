@@ -8,3 +8,8 @@
 .grid-container div {
   margin-left: 10px;
 }
+.add-button {
+  position: fixed;
+  bottom: 20px;
+  right: 40px;
+}
