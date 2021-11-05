@@ -1,0 +1,18 @@
+:host {
+  display: flex;
+  justify-content: center;
+}
+
+mat-card {
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+mat-card-title {
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+mat-card-title {
+  display: flex;
+  justify-content: center;
+}

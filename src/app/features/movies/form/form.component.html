@@ -1,1 +1,148 @@
-<p>form works!</p>
+<mat-card
+  fxFlex.xs="0 1 calc(90%)"
+  fxFlex.sm="0 1 calc(80%)"
+  fxFlex.md="0 1 calc(33%)"
+  fxFlex.gt-md="0 1 calc(25%)"
+>
+  <!-- fxFlexFill -->
+  <mat-card-title>{{ "movies.form.newMovie" | translate }}</mat-card-title>
+  <mat-card-content fxLayout="column">
+    <!-- Group 1 -->
+    <div
+      class="input-row"
+      fxLayout="row"
+      fxLayout.lt-md="column"
+      fxLayoutGap="20px"
+      fxLayoutGap.lt-md="0px"
+    >
+      <!-- Title field -->
+      <mat-form-field appearance="fill">
+        <mat-label>{{ "movies.form.title" | translate }}</mat-label>
+        <input
+          [placeholder]="'movies.form.title.placeholder' | translate"
+          matInput
+        />
+      </mat-form-field>
+
+      <!-- Poster field -->
+      <mat-form-field appearance="fill">
+        <mat-label>{{ "movies.form.poster" | translate }} (url)</mat-label>
+        <input
+          [placeholder]="'movies.form.poster.placeholder' | translate"
+          matInput
+        />
+      </mat-form-field>
+
+      <!-- Genders field -->
+      <mat-form-field appearance="fill">
+        <mat-label>{{ "movies.form.genders" | translate }}</mat-label>
+        <mat-chip-list #gendersList aria-label="genders selection">
+          <mat-chip
+            *ngFor="let gender of genders; let i = index"
+            [selectable]="true"
+            [removable]="true"
+            (removed)="remove(gender, 'genders')"
+          >
+            {{ gender }}
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+          <input
+            [placeholder]="'movies.form.genders.placeholder' | translate"
+            [matChipInputFor]="gendersList"
+            [matChipInputAddOnBlur]="true"
+            (matChipInputTokenEnd)="add($event, 'genders')"
+          />
+        </mat-chip-list>
+      </mat-form-field>
+
+      <!-- Actors field -->
+      <mat-form-field appearance="fill">
+        <mat-label>{{ "movies.form.actors" | translate }}</mat-label>
+        <mat-chip-list #actorsList aria-label="actors selection">
+          <mat-chip
+            *ngFor="let actor of actors; let i = index"
+            [selectable]="true"
+            [removable]="true"
+            (removed)="remove(actor, 'actors')"
+          >
+            {{ actor }}
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+          <input
+            #actorsInput
+            [formControl]="actorsCtrl"
+            [matAutocomplete]="auto"
+            [matChipInputFor]="actorsList"
+            [placeholder]="'movies.form.actors.placeholder' | translate"
+            (matChipInputTokenEnd)="add($event, 'actors')"
+          />
+        </mat-chip-list>
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          (optionSelected)="selected($event)"
+        >
+          <mat-option
+            *ngFor="let actor of filteredActors | async"
+            [value]="actor"
+          >
+            {{ actor }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+    <!-- Group 2 -->
+    <div
+      class="input-row"
+      fxLayout="row"
+      fxLayout.lt-md="column"
+      fxLayoutGap="20px"
+      fxLayoutGap.lt-md="0px"
+    >
+      <!-- Companies field -->
+      <mat-form-field appearance="fill">
+        <mat-label>{{ "movies.form.companies" | translate }}</mat-label>
+        <mat-select
+          [placeholder]="'movies.form.companies.placeholder' | translate"
+        >
+          <mat-option *ngFor="let companie of companies" [value]="companie">
+            {{ companie }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- year field -->
+      <mat-form-field appearance="fill">
+        <mat-label>{{ "movies.form.year" | translate }}</mat-label>
+        <input
+          type="number"
+          [placeholder]="'movies.form.year.placeholder' | translate"
+          matInput
+        />
+      </mat-form-field>
+
+      <!-- duration field -->
+      <mat-form-field appearance="fill">
+        <mat-label>{{ "movies.form.duration" | translate }}</mat-label>
+        <input
+          type="number"
+          [placeholder]="'movies.form.duration.placeholder' | translate"
+          matInput
+        />
+      </mat-form-field>
+
+      <!-- duration field -->
+      <mat-form-field appearance="fill">
+        <mat-label>{{ "movies.form.score" | translate }}</mat-label>
+        <input
+          type="number"
+          [placeholder]="'movies.form.score.placeholder' | translate"
+          matInput
+        />
+      </mat-form-field>
+    </div>
+  </mat-card-content>
+</mat-card>
