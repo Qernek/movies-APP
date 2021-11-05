@@ -2,5 +2,22 @@
   "sidenav.title": "Menú",
   "sidenav.movies": "Películas",
   "sidenav.actors": "Actores",
-  "sidenav.companies": "Estudios"
+  "sidenav.companies": "Estudios",
+  "movies.form.newMovie": "Nueva Película",
+  "movies.form.title": "Título",
+  "movies.form.title.placeholder": "Añade un título",
+  "movies.form.poster": "Póster",
+  "movies.form.poster.placeholder": "Añade un poster (url)",
+  "movies.form.genders": "Géneros",
+  "movies.form.genders.placeholder": "Añade un género",
+  "movies.form.actors": "Actores",
+  "movies.form.actors.placeholder": "Añade un actor",
+  "movies.form.companies": "Estudio",
+  "movies.form.companies.placeholder": "Añade un estudio",
+  "movies.form.year": "Año",
+  "movies.form.year.placeholder": "Añade un año",
+  "movies.form.duration": "Duración",
+  "movies.form.duration.placeholder": "Añade una duración",
+  "movies.form.score": "Puntuación",
+  "movies.form.score.placeholder": "Añade un puntuación"
 }

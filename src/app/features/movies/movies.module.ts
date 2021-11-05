@@ -8,6 +8,8 @@ import { CardsComponent } from '../../shared/components/cards/cards.component';
 import { MaterialsModule } from '../../core/modules/materials.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CoreModule } from '../../core/core.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,9 @@ import { CoreModule } from '../../core/core.module';
     MaterialsModule,
     FlexLayoutModule,
     CoreModule,
+    TranslateModule,
+    ReactiveFormsModule,
+    FormsModule,
   ],
 })
 export class MoviesModule {}
