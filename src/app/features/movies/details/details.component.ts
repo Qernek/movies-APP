@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EventsService } from '../../../core/services/events/events.service';
 import { Movie } from '../../../core/models/movies';
 import { Subscription } from 'rxjs';
-import { Actor } from 'src/app/core/models/actors';
-import { Companies } from 'src/app/core/models/companies';
+import { Actor } from '../../../core/models/actors';
+import { Companies } from '../../../core/models/companies';
 
 @Component({
   selector: 'app-details',
@@ -13,7 +13,8 @@ import { Companies } from 'src/app/core/models/companies';
 })
 export class DetailsComponent implements OnInit, OnDestroy {
   movie: Movie;
-  movieId: number = +this.route.snapshot.paramMap.get('id')!;
+  moviesList: Movie[];
+  movieId: number = +this.activatedroute.snapshot.paramMap.get('id')!;
   actorsList: Actor[];
   companiesList: Companies[];
   companiesSubscription: Subscription;
@@ -24,7 +25,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly eventsService: EventsService,
-    private readonly route: ActivatedRoute
+    private readonly activatedroute: ActivatedRoute,
+    private readonly router: Router
   ) {}
 
   ngOnInit(): void {
@@ -39,12 +41,22 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * delete the movie from the list
+   */
+  deleteMovie() {
+    this.moviesList = this.moviesList.filter((movie) => movie !== this.movie);
+    this.eventsService.moviesList.next(this.moviesList);
+    this.router.navigate(['movies']);
+  }
+
+  /**
    * subscription to movies data
    */
   movieDataSubscription() {
     this.moviesSubscription = this.eventsService.moviesList.subscribe(
       (moviesList: Movie[]) => {
-        this.searchMovie(moviesList);
+        this.moviesList = moviesList;
+        this.searchMovie();
       }
     );
   }
@@ -75,8 +87,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
    * Search in the movieList the id of the url and set movie to show the data
    * @param movieList movie list
    */
-  searchMovie(movieList: Movie[]) {
-    const movie = movieList.find((movie) => movie.id === this.movieId);
+  searchMovie() {
+    const movie = this.moviesList.find((movie) => movie.id === this.movieId);
     if (movie) {
       this.movie = movie;
     }

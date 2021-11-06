@@ -14,7 +14,6 @@ export class CompaniesPipe implements PipeTransform {
   companieName: string;
 
   transform(movieId: number, companiesList: Companies[]) {
-    console.log(companiesList);
     for (let i = 0; i < companiesList.length; i++) {
       const companie = companiesList[i];
       for (let z = 0; z < companie.movies.length; z++) {
