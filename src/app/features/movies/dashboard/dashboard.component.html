@@ -10,16 +10,20 @@
     fxFlex.sm="0 1 calc(50%-20px)"
     fxFlex.md="0 1 calc(33%-20px)"
     fxFlex.gt-md="0 1 calc(25%-20px)"
-    *ngFor="let card of cardData"
+    *ngFor="let movie of moviesList"
   >
-    <app-cards [card]="card" class="cards-margin"></app-cards>
+    <app-cards
+      (click)="movieInfo(movie)"
+      [movie]="movie"
+      class="cards-container"
+    ></app-cards>
   </div>
   <button
     [routerLink]="'add'"
     mat-fab
     color="primary"
     class="add-button"
-    aria-label="add film icon"
+    aria-label="add film button"
   >
     <mat-icon>add</mat-icon>
   </button>

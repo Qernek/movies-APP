@@ -4,7 +4,6 @@
   fxFlex.md="0 1 calc(33%)"
   fxFlex.gt-md="0 1 calc(25%)"
 >
-  <!-- fxFlexFill -->
   <mat-card-title>{{ "movies.form.newMovie" | translate }}</mat-card-title>
   <mat-card-content fxLayout="column">
     <!-- Group 1 -->
@@ -118,6 +117,7 @@
       <mat-form-field appearance="fill">
         <mat-label>{{ "movies.form.year" | translate }}</mat-label>
         <input
+          min="0"
           type="number"
           [placeholder]="'movies.form.year.placeholder' | translate"
           matInput
@@ -128,6 +128,7 @@
       <mat-form-field appearance="fill">
         <mat-label>{{ "movies.form.duration" | translate }}</mat-label>
         <input
+          min="0"
           type="number"
           [placeholder]="'movies.form.duration.placeholder' | translate"
           matInput
@@ -138,6 +139,7 @@
       <mat-form-field appearance="fill">
         <mat-label>{{ "movies.form.score" | translate }}</mat-label>
         <input
+          min="0"
           type="number"
           [placeholder]="'movies.form.score.placeholder' | translate"
           matInput

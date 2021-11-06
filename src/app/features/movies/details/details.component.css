@@ -1,0 +1,55 @@
+:host {
+  display: flex;
+  justify-content: center;
+}
+
+mat-card {
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  margin-bottom: 82px;
+}
+
+mat-card-title {
+  display: flex;
+  justify-content: center;
+}
+
+img {
+  width: 100%;
+  margin: 10px 0px auto;
+  max-height: 500px;
+  object-fit: contain;
+}
+
+.delete-button {
+  position: fixed;
+  bottom: 20px;
+  right: 25px;
+  background-color: #e94545;
+}
+
+.edit-button {
+  position: fixed;
+  bottom: 20px;
+  right: 100px;
+  background-color: #008068;
+}
+
+.left-box {
+  text-align: left;
+}
+
+.right-box {
+  text-align: right;
+}
+
+.font-title {
+  font-weight: 500;
+}
+.separator {
+  border-bottom: 1px solid #c9c9c9;
+}
+
+.genre {
+  margin-right: 10px;
+}
