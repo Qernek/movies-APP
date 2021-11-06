@@ -1,0 +1,14 @@
+.mat-card {
+  border-radius: 15px;
+}
+img {
+  max-width: 400px;
+  max-height: 600px;
+}
+mat-card-title {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 336px;
+  height: 1.2em;
+  white-space: nowrap;
+}

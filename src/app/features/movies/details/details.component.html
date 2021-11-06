@@ -1,61 +1,94 @@
-<mat-card
-  fxFlex.xs="0 1 calc(90%)"
-  fxFlex.sm="0 1 calc(80%)"
-  fxFlex.md="0 1 calc(70%)"
-  fxFlex.lg="0 1 calc(40%)"
-  fxFlex.gt-md="0 1 calc(35%)"
->
-  <mat-card-title>{{ movie.title }}</mat-card-title>
-  <img mat-card-image [src]="movie.poster" alt="image of movie" />
-  <mat-card-content>
-    <div fxLayout="row">
-      <div class="left-box" fxFlex="50">
-        <p class="font-title">{{ "movies.form.score" | translate }}</p>
-        <p>{{ movie.imdbRating }}</p>
+<ng-container *ngIf="movie">
+  <mat-card
+    fxFlex.xs="0 1 calc(90%)"
+    fxFlex.sm="0 1 calc(80%)"
+    fxFlex.md="0 1 calc(70%)"
+    fxFlex.lg="0 1 calc(40%)"
+    fxFlex.gt-md="0 1 calc(35%)"
+  >
+    <mat-card-title>{{ movie.title }}</mat-card-title>
+    <img
+      mat-card-image
+      [src]="movie.poster ? movie.poster : noImage"
+      alt="image of movie"
+    />
+
+    <mat-card-content>
+      <div fxLayout="row">
+        <div class="left-box" fxFlex="50">
+          <p class="font-title">{{ "movies.form.score" | translate }}</p>
+          <p>{{ movie.imdbRating }}</p>
+        </div>
+        <div class="right-box" fxFlex="50">
+          <p class="font-title">
+            {{ "movies.form.duration" | translate }}
+          </p>
+          <p>{{ movie.duration | time }}</p>
+        </div>
       </div>
-      <div class="right-box" fxFlex="50">
-        <p class="font-title">
-          {{ "movies.form.duration" | translate }}
-        </p>
-        <p>{{ movie.duration }}</p>
+      <div fxLayout="row">
+        <div class="left-box" fxFlex="100">
+          <p class="font-title separator">
+            {{ "movies.form.actors" | translate }}
+          </p>
+          <ng-container *ngIf="actorsList.length">
+            <p *ngFor="let actors of movie.actors; let i = index">
+              {{ actors | findActor: actorsList }}
+            </p>
+          </ng-container>
+          <ng-container *ngIf="!actorsList.length">
+            <span>{{ "shared.components.cards.noActors" | translate }}</span>
+          </ng-container>
+        </div>
       </div>
-    </div>
-    <div fxLayout="row">
-      <div class="left-box" fxFlex="100">
-        <p class="font-title separator">
-          {{ "movies.form.actors" | translate }}
-        </p>
-        <p *ngFor="let actors of movie.actors; let i = index">{{ actors }}</p>
+      <div fxLayout="row">
+        <div class="left-box" fxFlex="100">
+          <p class="font-title separator">
+            {{ "movies.form.companies" | translate }}
+          </p>
+          <ng-container *ngIf="companiesList.length">
+            <p>{{ movieId | findCompanie: companiesList }}</p>
+          </ng-container>
+        </div>
       </div>
-    </div>
-    <div fxLayout="row">
-      <div class="left-box" fxFlex="100">
-        <p class="font-title separator">
-          {{ "movies.form.companies" | translate }}
-        </p>
-        <p>no data</p>
+      <div fxLayout="row">
+        <div class="left-box" fxFlex="100">
+          <p class="font-title separator">
+            {{ "movies.form.genders" | translate }}
+          </p>
+          <ng-container *ngIf="movie.genre">
+            <span *ngFor="let genre of movie.genre; let i = index">
+              #{{ genre }}</span
+            >
+          </ng-container>
+
+          <ng-container *ngIf="!movie.genre.length">
+            <span>{{ "shared.components.cards.noGenres" | translate }}</span>
+          </ng-container>
+        </div>
       </div>
-    </div>
-    <div fxLayout="row">
-      <div class="left-box" fxFlex="100">
-        <p class="font-title separator">
-          {{ "movies.form.genders" | translate }}
-        </p>
-        <span class="genre" *ngFor="let genre of movie.genre; let i = index"
-          >#{{ genre }}</span
-        >
-      </div>
-    </div>
-  </mat-card-content></mat-card
->
-<button
-  [routerLink]="'/movies/edt'"
-  mat-fab
-  class="edit-button"
-  aria-label="edit film button"
->
-  <mat-icon>edit</mat-icon>
-</button>
-<button mat-fab class="delete-button" aria-label="delete film button">
-  <mat-icon>delete</mat-icon>
-</button>
+    </mat-card-content></mat-card
+  >
+  <button
+    [routerLink]="'/movies/edt'"
+    mat-fab
+    class="edit-button"
+    aria-label="edit film button"
+  >
+    <mat-icon>edit</mat-icon>
+  </button>
+  <button mat-fab class="delete-button" aria-label="delete film button">
+    <mat-icon>delete</mat-icon>
+  </button>
+</ng-container>
+<ng-container *ngIf="!movie">
+  <mat-card
+    fxFlex.xs="0 1 calc(90%)"
+    fxFlex.sm="0 1 calc(80%)"
+    fxFlex.md="0 1 calc(70%)"
+    fxFlex.lg="0 1 calc(40%)"
+    fxFlex.gt-md="0 1 calc(35%)"
+  >
+    <mat-card-title>{{ "movies.form.notfound" | translate }}</mat-card-title>
+  </mat-card>
+</ng-container>
