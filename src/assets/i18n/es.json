@@ -19,5 +19,10 @@
   "movies.form.duration": "Duración",
   "movies.form.duration.placeholder": "Añade una duración",
   "movies.form.score": "Puntuación",
-  "movies.form.score.placeholder": "Añade un puntuación"
+  "movies.form.notfound": "Película no encontrada",
+  "movies.form.score.placeholder": "Añade un puntuación",
+  "shared.components.cards.noGenres": "No se han encontrado géneros",
+  "shared.components.cards.noActors": "No se han encontrado actores",
+  "shared.components.cards.companies": "No se ha encontrado compañias",
+  "spinner.text": "Cargando..."
 }

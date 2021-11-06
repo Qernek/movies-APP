@@ -8,6 +8,8 @@ import { Movie } from '../../../core/models/movies';
 })
 export class CardsComponent implements OnInit {
   @Input() movie: Movie;
+  noImage: string =
+    'https://dummyimage.com/400x600.png/dddddd/000000&text=No+image+available';
   constructor() {}
 
   ngOnInit(): void {}

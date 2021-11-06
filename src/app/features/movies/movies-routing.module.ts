@@ -17,6 +17,7 @@ const routes: Routes = [
     path: ':id',
     component: DetailsComponent,
   },
+  { path: '', redirectTo: '/movies', pathMatch: 'full' },
 ];
 
 @NgModule({
