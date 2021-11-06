@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Movies } from '../../../core/models/movies';
+import { Router } from '@angular/router';
+import { Movie } from '../../../core/models/movies';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,8 +8,8 @@ import { Movies } from '../../../core/models/movies';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-  constructor() {}
-  cardData: Movies[] = [
+  constructor(private router: Router) {}
+  moviesList: Movie[] = [
     {
       id: 1,
       title: 'Dancing Lady',
@@ -51,4 +52,12 @@ export class DashboardComponent implements OnInit {
     },
   ];
   ngOnInit(): void {}
+
+  /**
+   * Navigate to movie details component
+   * @param movie movie object
+   */
+  movieInfo(movie: Movie) {
+    this.router.navigate(['movies', movie.id]);
+  }
 }

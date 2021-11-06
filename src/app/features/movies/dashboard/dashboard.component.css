@@ -1,5 +1,6 @@
-.cards-margin {
+.cards-container {
   margin-bottom: 30px;
+  cursor: pointer;
 }
 .grid-container {
   margin-top: 30px;
