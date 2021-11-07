@@ -47,7 +47,7 @@
             {{ "movies.form.companies" | translate }}
           </p>
           <ng-container *ngIf="companiesList.length">
-            <p>{{ movieId | findCompanie: companiesList }}</p>
+            <p>{{ movieId | findCompanieByMovie: companiesList }}</p>
           </ng-container>
         </div>
       </div>
@@ -70,7 +70,7 @@
     </mat-card-content></mat-card
   >
   <button
-    [routerLink]="'/movies/edt'"
+    (click)="editMovie()"
     mat-fab
     class="edit-button"
     aria-label="edit film button"

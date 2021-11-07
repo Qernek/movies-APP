@@ -12,7 +12,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TimePipe } from '../../core/pipes/time.pipe';
 import { ActorsPipe } from '../../core/pipes/actors.pipe';
-import { CompaniesPipe } from '../../core/pipes/companies.pipe';
+import { CompaniesByMoviePipe } from '../../core/pipes/companiesByMovie.pipe';
+import { CompaniesById } from '../../core/pipes/companiesById.pipe';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { CompaniesPipe } from '../../core/pipes/companies.pipe';
     CardsComponent,
     TimePipe,
     ActorsPipe,
-    CompaniesPipe,
+    CompaniesByMoviePipe,
+    CompaniesById,
   ],
   imports: [
     CommonModule,

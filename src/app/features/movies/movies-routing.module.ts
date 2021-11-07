@@ -17,6 +17,10 @@ const routes: Routes = [
     path: ':id',
     component: DetailsComponent,
   },
+  {
+    path: 'edt/:id',
+    component: FormComponent,
+  },
   { path: '', redirectTo: '/movies', pathMatch: 'full' },
 ];
 

@@ -4,6 +4,7 @@
   "sidenav.actors": "Actores",
   "sidenav.companies": "Estudios",
   "movies.form.newMovie": "Nueva Película",
+  "movies.form.editMovie": "Editar Película",
   "movies.form.title": "Título",
   "movies.form.title.placeholder": "Añade un título",
   "movies.form.poster": "Póster",
