@@ -4,7 +4,12 @@
   fxFlex.md="0 1 calc(33%)"
   fxFlex.gt-md="0 1 calc(25%)"
 >
-  <mat-card-title>{{ "movies.form.newMovie" | translate }}</mat-card-title>
+  <mat-card-title *ngIf="isCreation">{{
+    "movies.form.newMovie" | translate
+  }}</mat-card-title>
+  <mat-card-title *ngIf="!isCreation">{{
+    "movies.form.editMovie" | translate
+  }}</mat-card-title>
   <mat-card-content fxLayout="column">
     <!-- Group 1 -->
     <div
@@ -40,7 +45,7 @@
             *ngFor="let gender of genders; let i = index"
             [selectable]="true"
             [removable]="true"
-            (removed)="remove(gender, 'genders')"
+            (removed)="removeGender(gender)"
           >
             {{ gender }}
             <button matChipRemove>
@@ -51,47 +56,35 @@
             [placeholder]="'movies.form.genders.placeholder' | translate"
             [matChipInputFor]="gendersList"
             [matChipInputAddOnBlur]="true"
-            (matChipInputTokenEnd)="add($event, 'genders')"
+            (matChipInputTokenEnd)="addGender($event)"
           />
         </mat-chip-list>
       </mat-form-field>
 
       <!-- Actors field -->
-      <mat-form-field appearance="fill">
-        <mat-label>{{ "movies.form.actors" | translate }}</mat-label>
-        <mat-chip-list #actorsList aria-label="actors selection">
-          <mat-chip
-            *ngFor="let actor of actors; let i = index"
-            [selectable]="true"
-            [removable]="true"
-            (removed)="remove(actor, 'actors')"
-          >
-            {{ actor }}
-            <button matChipRemove>
-              <mat-icon>cancel</mat-icon>
-            </button>
-          </mat-chip>
-          <input
-            #actorsInput
-            [formControl]="actorsCtrl"
-            [matAutocomplete]="auto"
-            [matChipInputFor]="actorsList"
-            [placeholder]="'movies.form.actors.placeholder' | translate"
-            (matChipInputTokenEnd)="add($event, 'actors')"
-          />
-        </mat-chip-list>
-        <mat-autocomplete
-          #auto="matAutocomplete"
-          (optionSelected)="selected($event)"
-        >
-          <mat-option
-            *ngFor="let actor of filteredActors | async"
-            [value]="actor"
-          >
-            {{ actor }}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
+      <ng-container *ngIf="actorsList.length">
+        <mat-form-field appearance="fill">
+          <mat-label>{{ "movies.form.actors" | translate }}</mat-label>
+          <mat-select [formControl]="actorsControl" multiple>
+            <mat-select-trigger>
+              <mat-chip-list>
+                <mat-chip
+                  *ngFor="let actors of actorsControl.value"
+                  [removable]="true"
+                  (removed)="removeActor(actors)"
+                >
+                  {{ actors | findActor: actorsList }}
+                  <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+              </mat-chip-list>
+            </mat-select-trigger>
+
+            <mat-option *ngFor="let actor of actorsSelectData" [value]="actor">
+              {{ actor | findActor: actorsList }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
     </div>
     <!-- Group 2 -->
     <div
@@ -102,17 +95,21 @@
       fxLayoutGap.lt-md="0px"
     >
       <!-- Companies field -->
-      <mat-form-field appearance="fill">
-        <mat-label>{{ "movies.form.companies" | translate }}</mat-label>
-        <mat-select
-          [placeholder]="'movies.form.companies.placeholder' | translate"
-        >
-          <mat-option *ngFor="let companie of companies" [value]="companie">
-            {{ companie }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
+      <ng-container *ngIf="companiesList.length">
+        <mat-form-field appearance="fill">
+          <mat-label>{{ "movies.form.companies" | translate }}</mat-label>
+          <mat-select
+            [placeholder]="'movies.form.companies.placeholder' | translate"
+          >
+            <mat-option
+              *ngFor="let companie of companiesSelectData"
+              [value]="companie"
+            >
+              {{ companie | findCompanieById: companiesList }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
       <!-- year field -->
       <mat-form-field appearance="fill">
         <mat-label>{{ "movies.form.year" | translate }}</mat-label>

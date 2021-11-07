@@ -36,8 +36,16 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.companiesSubscription.unsubscribe();
     this.moviesSubscription.unsubscribe();
     this.actorsSubscription.unsubscribe();
+  }
+
+  /**
+   * go to edit page of the movie
+   */
+  editMovie() {
+    this.router.navigate(['movies/edt/', this.movieId]);
   }
 
   /**
