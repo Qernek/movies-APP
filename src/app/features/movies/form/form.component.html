@@ -8,141 +8,184 @@
   <mat-card-title *ngIf="isCreation">{{
     "movies.form.newMovie" | translate
   }}</mat-card-title>
-  <mat-card-title *ngIf="!isCreation">{{
-    "movies.form.editMovie" | translate
+  <mat-card-title *ngIf="!isCreation && movie"
+    >{{ "movies.form.editMovie" | translate }} -
+    {{ movie.title }}</mat-card-title
+  >
+  <mat-card-title *ngIf="!isCreation && !movie">{{
+    "movies.form.notfound" | translate
   }}</mat-card-title>
-  <mat-card-content fxLayout="column">
-    <!-- Group 1 -->
-    <div
-      class="input-row"
-      fxLayout="row"
-      fxLayout.lt-md="column"
-      fxLayoutGap="20px"
-      fxLayoutGap.lt-md="0px"
-    >
-      <!-- Title field -->
-      <mat-form-field appearance="fill">
-        <mat-label>{{ "movies.form.title" | translate }}</mat-label>
-        <input
-          [placeholder]="'movies.form.title.placeholder' | translate"
-          matInput
-        />
-      </mat-form-field>
-
-      <!-- Poster field -->
-      <mat-form-field appearance="fill">
-        <mat-label>{{ "movies.form.poster" | translate }} (url)</mat-label>
-        <input
-          [placeholder]="'movies.form.poster.placeholder' | translate"
-          matInput
-        />
-      </mat-form-field>
-
-      <!-- Genders field -->
-      <mat-form-field appearance="fill">
-        <mat-label>{{ "movies.form.genders" | translate }}</mat-label>
-        <mat-chip-list #gendersList aria-label="genders selection">
-          <mat-chip
-            *ngFor="let gender of genders; let i = index"
-            [selectable]="true"
-            [removable]="true"
-            (removed)="removeGender(gender)"
-          >
-            {{ gender }}
-            <button matChipRemove>
-              <mat-icon>cancel</mat-icon>
-            </button>
-          </mat-chip>
+  <mat-card-content
+    fxLayout="column"
+    *ngIf="(!isCreation && movie) || isCreation"
+  >
+    <form [formGroup]="movieForm">
+      <!-- Group 1 -->
+      <div
+        class="input-row"
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutGap="20px"
+        fxLayoutGap.lt-md="0px"
+      >
+        <!-- Title field -->
+        <mat-form-field appearance="fill">
+          <mat-label>{{ "movies.form.title" | translate }}</mat-label>
           <input
-            [placeholder]="'movies.form.genders.placeholder' | translate"
-            [matChipInputFor]="gendersList"
-            [matChipInputAddOnBlur]="true"
-            (matChipInputTokenEnd)="addGender($event)"
+            formControlName="title"
+            [placeholder]="'movies.form.title.placeholder' | translate"
+            matInput
           />
-        </mat-chip-list>
-      </mat-form-field>
-
-      <!-- Actors field -->
-      <ng-container *ngIf="actorsList.length">
-        <mat-form-field appearance="fill">
-          <mat-label>{{ "movies.form.actors" | translate }}</mat-label>
-          <mat-select [formControl]="actorsControl" multiple>
-            <mat-select-trigger>
-              <mat-chip-list>
-                <mat-chip
-                  *ngFor="let actors of actorsControl.value"
-                  [removable]="true"
-                  (removed)="removeActor(actors)"
-                >
-                  {{ actors | findActor: actorsList }}
-                  <mat-icon matChipRemove>cancel</mat-icon>
-                </mat-chip>
-              </mat-chip-list>
-            </mat-select-trigger>
-
-            <mat-option *ngFor="let actor of actorsSelectData" [value]="actor">
-              {{ actor | findActor: actorsList }}
-            </mat-option>
-          </mat-select>
         </mat-form-field>
-      </ng-container>
-    </div>
-    <!-- Group 2 -->
-    <div
-      class="input-row"
-      fxLayout="row"
-      fxLayout.lt-md="column"
-      fxLayoutGap="20px"
-      fxLayoutGap.lt-md="0px"
-    >
-      <!-- Companies field -->
-      <ng-container *ngIf="companiesList.length">
+
+        <!-- Poster field -->
         <mat-form-field appearance="fill">
-          <mat-label>{{ "movies.form.companies" | translate }}</mat-label>
-          <mat-select
-            [placeholder]="'movies.form.companies.placeholder' | translate"
-          >
-            <mat-option
-              *ngFor="let companie of companiesSelectData"
-              [value]="companie"
+          <mat-label>{{ "movies.form.poster" | translate }} (url)</mat-label>
+          <input
+            formControlName="poster"
+            [placeholder]="'movies.form.poster.placeholder' | translate"
+            matInput
+          />
+        </mat-form-field>
+
+        <!-- year field -->
+        <mat-form-field appearance="fill">
+          <mat-label>{{ "movies.form.year" | translate }}</mat-label>
+          <input
+            formControlName="year"
+            min="0"
+            type="number"
+            [placeholder]="'movies.form.year.placeholder' | translate"
+            matInput
+          />
+        </mat-form-field>
+
+        <!-- duration field -->
+        <mat-form-field appearance="fill">
+          <mat-label>{{ "movies.form.duration" | translate }}</mat-label>
+          <input
+            formControlName="duration"
+            min="0"
+            type="number"
+            [placeholder]="'movies.form.duration.placeholder' | translate"
+            matInput
+          />
+        </mat-form-field>
+      </div>
+      <!-- Group 2 -->
+      <div
+        class="input-row"
+        fxLayout="row"
+        fxLayout.lt-md="column"
+        fxLayoutGap="20px"
+        fxLayoutGap.lt-md="0px"
+      >
+        <!-- Companies field -->
+        <ng-container *ngIf="companiesList.length">
+          <mat-form-field appearance="fill">
+            <mat-label>{{ "movies.form.companies" | translate }}</mat-label>
+            <mat-select
+              formControlName="companies"
+              [placeholder]="'movies.form.companies.placeholder' | translate"
             >
-              {{ companie | findCompanieById: companiesList }}
-            </mat-option>
-          </mat-select>
+              <mat-option
+                *ngFor="let companie of companiesSelectData"
+                [value]="companie"
+              >
+                {{ companie | findCompanieById: companiesList }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </ng-container>
+
+        <!-- Genders field -->
+        <mat-form-field appearance="fill">
+          <mat-label>{{ "movies.form.genders" | translate }}</mat-label>
+          <mat-chip-list
+            formControlName="genre"
+            #gendersList
+            aria-label="genders selection"
+          >
+            <mat-chip
+              *ngFor="let gender of genders; let i = index"
+              [selectable]="true"
+              [removable]="true"
+              (removed)="removeGender(gender)"
+            >
+              {{ gender }}
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip>
+            <input
+              [placeholder]="'movies.form.genders.placeholder' | translate"
+              [matChipInputFor]="gendersList"
+              [matChipInputAddOnBlur]="true"
+              (matChipInputTokenEnd)="addGender($event)"
+            />
+          </mat-chip-list>
         </mat-form-field>
-      </ng-container>
-      <!-- year field -->
-      <mat-form-field appearance="fill">
-        <mat-label>{{ "movies.form.year" | translate }}</mat-label>
-        <input
-          min="0"
-          type="number"
-          [placeholder]="'movies.form.year.placeholder' | translate"
-          matInput
-        />
-      </mat-form-field>
 
-      <!-- duration field -->
-      <mat-form-field appearance="fill">
-        <mat-label>{{ "movies.form.duration" | translate }}</mat-label>
-        <input
-          min="0"
-          type="number"
-          [placeholder]="'movies.form.duration.placeholder' | translate"
-          matInput
-        />
-      </mat-form-field>
+        <!-- Actors field -->
+        <ng-container *ngIf="actorsList.length">
+          <mat-form-field appearance="fill">
+            <mat-label>{{ "movies.form.actors" | translate }}</mat-label>
+            <mat-select formControlName="actors" multiple>
+              <mat-select-trigger>
+                <mat-chip-list>
+                  <mat-chip
+                    *ngFor="let actors of movieForm.controls['actors'].value"
+                    [removable]="true"
+                    (removed)="removeActor(actors)"
+                  >
+                    {{ actors | findActor: actorsList }}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                  </mat-chip>
+                </mat-chip-list>
+              </mat-select-trigger>
 
-      <!-- duration field -->
-      <mat-form-field appearance="fill">
-        <mat-label>{{ "movies.form.score" | translate }}</mat-label>
-        <input
-          min="0"
-          type="number"
-          [placeholder]="'movies.form.score.placeholder' | translate"
-          matInput
-        />
-      </mat-form-field>
-    </div>
+              <mat-option
+                *ngFor="let actor of actorsSelectData"
+                [value]="actor"
+              >
+                {{ actor | findActor: actorsList }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </ng-container>
+
+        <!-- score field -->
+        <mat-form-field appearance="fill">
+          <mat-label>{{ "movies.form.score" | translate }}</mat-label>
+          <input
+            formControlName="imdbRating"
+            min="0"
+            type="number"
+            [placeholder]="'movies.form.score.placeholder' | translate"
+            matInput
+          />
+        </mat-form-field>
+      </div>
+    </form>
   </mat-card-content>
 </mat-card>
+<button
+  mat-fab
+  color="primary"
+  class="form-button"
+  *ngIf="isCreation"
+  (click)="addNewMovie()"
+  aria-label="form add movie button"
+>
+  <mat-icon>save</mat-icon>
+</button>
+<button
+  mat-fab
+  color="primary"
+  class="form-button"
+  *ngIf="!isCreation"
+  (click)="editMovie()"
+  aria-label="form add movie button"
+>
+  <mat-icon>save</mat-icon>
+</button>

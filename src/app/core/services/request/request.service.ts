@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Actor } from '../../models/actors';
 import { Companies } from '../../models/companies';
@@ -12,7 +11,7 @@ import { EventsService } from '../events/events.service';
   providedIn: 'root',
 })
 export class RequestService {
-  apiURL = environment.APIEndpoint;
+  private apiURL = environment.APIEndpoint;
 
   constructor(
     private readonly http: HttpClient,
@@ -24,9 +23,7 @@ export class RequestService {
    * @returns array of movies
    */
   private getMovies(): Observable<Movie[]> {
-    return this.http
-      .get<Movie[]>(this.apiURL + '/movies')
-      .pipe(catchError(this.handleError));
+    return this.http.get<Movie[]>(this.apiURL + '/movies');
   }
 
   /**
@@ -34,9 +31,7 @@ export class RequestService {
    * @returns array of actors
    */
   private getActors(): Observable<Actor[]> {
-    return this.http
-      .get<Actor[]>(this.apiURL + '/actors')
-      .pipe(catchError(this.handleError));
+    return this.http.get<Actor[]>(this.apiURL + '/actors');
   }
 
   /**
@@ -44,9 +39,7 @@ export class RequestService {
    * @returns array of companies
    */
   private getCompanies(): Observable<Companies[]> {
-    return this.http
-      .get<Companies[]>(this.apiURL + '/companies')
-      .pipe(catchError(this.handleError));
+    return this.http.get<Companies[]>(this.apiURL + '/companies');
   }
 
   /**
@@ -66,21 +59,5 @@ export class RequestService {
     this.getActors().subscribe((actors: Actor[]) => {
       this.eventsService.actorsList.next(actors);
     });
-  }
-
-  /**
-   * Error handle
-   */
-  handleError(error: any) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      // Get client-side error
-      errorMessage = error.error.message;
-    } else {
-      // Get server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-    window.alert(errorMessage);
-    return throwError(errorMessage);
   }
 }

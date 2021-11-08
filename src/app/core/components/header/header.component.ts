@@ -9,7 +9,7 @@ import { SidenavService } from '../../services/sidenav/sidenav.service';
 export class HeaderComponent implements OnInit {
   pageTitle: string;
 
-  constructor(private sidenav: SidenavService) {}
+  constructor(private readonly sidenav: SidenavService) {}
 
   ngOnInit(): void {}
 

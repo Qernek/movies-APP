@@ -7,6 +7,7 @@ import { Actor } from '../models/actors';
 
 @Pipe({
   name: 'findActor',
+  pure: true,
 })
 export class ActorsPipe implements PipeTransform {
   actor: Actor | undefined;

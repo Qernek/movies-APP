@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -14,19 +14,30 @@ import { EventsService } from '../../../core/services/events/events.service';
   styleUrls: ['./form.component.css'],
 })
 export class FormComponent implements OnInit, OnDestroy {
+  private companiesSubscription: Subscription;
+  private moviesSubscription: Subscription;
+  private actorsSubscription: Subscription;
+  private moviesList: Movie[];
+  private movieId: number = +this.activatedroute.snapshot.paramMap.get('id')!;
   isCreation: boolean;
-  companiesSubscription: Subscription;
-  moviesSubscription: Subscription;
-  actorsSubscription: Subscription;
   companiesList: Companies[];
-  moviesList: Movie[];
-  movie: Movie;
+  movie: Movie | undefined;
   actorsList: Actor[];
-
-  actorsControl = new FormControl([]);
-  actorsSelectData: string[] = [];
-  companiesSelectData: string[] = [];
+  actorsSelectData: number[] = [];
+  companiesSelectData: number[] = [];
   genders: string[] = [];
+
+  movieForm: FormGroup = new FormGroup({
+    id: new FormControl(),
+    title: new FormControl(''),
+    poster: new FormControl(''),
+    genre: new FormControl([]),
+    year: new FormControl(),
+    duration: new FormControl(),
+    imdbRating: new FormControl(),
+    actors: new FormControl([]),
+    companies: new FormControl(),
+  });
 
   constructor(
     private readonly eventsService: EventsService,
@@ -48,11 +59,22 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * add new movie to movie list
+   */
+  addNewMovie() {
+    let newMovie: Movie[] = this.moviesList;
+    this.movieForm.controls['id'].setValue(Math.floor(Math.random() * 1000));
+    newMovie.push(this.movieForm.value);
+    this.eventsService.moviesList.next(newMovie);
+    this.router.navigate(['movies']);
+  }
+
+  /**
    * adds actors select data
    */
   addActorsToSelect() {
     for (let i = 0; i < this.actorsList.length; i++) {
-      this.actorsSelectData.push(this.actorsList[i].id.toString());
+      this.actorsSelectData.push(this.actorsList[i].id);
     }
   }
 
@@ -61,18 +83,40 @@ export class FormComponent implements OnInit, OnDestroy {
    */
   addCompaniesToSelect() {
     for (let i = 0; i < this.companiesList.length; i++) {
-      this.companiesSelectData.push(this.companiesList[i].id.toString());
+      this.companiesSelectData.push(this.companiesList[i].id);
     }
   }
 
   /**
    * check if the form is create or edit
+   * if it is edition add the fields
    */
   formMode() {
     if (this.activatedroute.snapshot.routeConfig?.path === 'edt/:id') {
       this.isCreation = false;
     } else if (this.activatedroute.snapshot.routeConfig?.path === 'add') {
       this.isCreation = true;
+    }
+  }
+
+  /**
+   * edit the movie
+   */
+  editMovie() {
+    this.moviesList = this.moviesList.filter((movie) => movie !== this.movie);
+    this.moviesList.push(this.movieForm.value);
+    this.eventsService.moviesList.next(this.moviesList);
+    this.router.navigate(['movies']);
+  }
+
+  /**
+   * search movie by url movie id
+   */
+  searchMovie() {
+    this.movie = this.moviesList.find((movie) => movie.id === this.movieId);
+    if (!this.isCreation && this.movie) {
+      this.movieForm.patchValue(this.movie);
+      this.genders = this.movie.genre;
     }
   }
 
@@ -85,6 +129,7 @@ export class FormComponent implements OnInit, OnDestroy {
     const value = (event.value || '').trim();
     if (value) {
       this.genders.push(value);
+      this.movieForm.controls['genre'].setValue(this.genders);
     }
     event.chipInput!.clear();
   }
@@ -107,9 +152,9 @@ export class FormComponent implements OnInit, OnDestroy {
    * @param actor actor
    */
   removeActor(actor: string): void {
-    const actors = this.actorsControl.value as string[];
+    const actors = this.movieForm.controls['actors'].value as string[];
     this.removeFirst(actors, actor);
-    this.actorsControl.setValue(actors);
+    this.movieForm.controls['actors'].setValue(actors);
   }
 
   private removeFirst<T>(array: T[], toRemove: T): void {
@@ -126,6 +171,7 @@ export class FormComponent implements OnInit, OnDestroy {
     this.moviesSubscription = this.eventsService.moviesList.subscribe(
       (moviesList: Movie[]) => {
         this.moviesList = moviesList;
+        this.searchMovie();
       }
     );
   }
