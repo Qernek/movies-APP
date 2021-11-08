@@ -7,6 +7,7 @@ import { Companies } from '../models/companies';
 
 @Pipe({
   name: 'findCompanieById',
+  pure: true,
 })
 export class CompaniesById implements PipeTransform {
   companie: Companies | undefined;

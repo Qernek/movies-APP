@@ -8,10 +8,11 @@ import { TranslateService } from '@ngx-translate/core';
 
 @Pipe({
   name: 'findCompanieByMovie',
+  pure: true,
 })
 export class CompaniesByMoviePipe implements PipeTransform {
   constructor(private readonly translateService: TranslateService) {}
-  companieName: string;
+  private companieName: string;
 
   transform(movieId: number | string, companiesList: Companies[]) {
     for (let i = 0; i < companiesList.length; i++) {

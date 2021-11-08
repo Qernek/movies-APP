@@ -12,14 +12,14 @@ import { Companies } from '../../../core/models/companies';
   styleUrls: ['./details.component.css'],
 })
 export class DetailsComponent implements OnInit, OnDestroy {
+  private companiesSubscription: Subscription;
+  private moviesSubscription: Subscription;
+  private actorsSubscription: Subscription;
+  private moviesList: Movie[];
   movie: Movie;
-  moviesList: Movie[];
   movieId: number = +this.activatedroute.snapshot.paramMap.get('id')!;
   actorsList: Actor[];
   companiesList: Companies[];
-  companiesSubscription: Subscription;
-  moviesSubscription: Subscription;
-  actorsSubscription: Subscription;
   noImage: string =
     'https://dummyimage.com/400x600.png/dddddd/000000&text=No+image+available';
 

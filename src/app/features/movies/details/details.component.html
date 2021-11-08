@@ -32,13 +32,13 @@
           <p class="font-title separator">
             {{ "movies.form.actors" | translate }}
           </p>
-          <ng-container *ngIf="actorsList.length">
+          <ng-container *ngIf="actorsList.length || movie.actors.length">
             <p *ngFor="let actors of movie.actors; let i = index">
               {{ actors | findActor: actorsList }}
             </p>
           </ng-container>
-          <ng-container *ngIf="!actorsList.length">
-            <span>{{ "shared.components.cards.noActors" | translate }}</span>
+          <ng-container *ngIf="!actorsList.length || !movie.actors.length">
+            <p>{{ "shared.components.cards.noActors" | translate }}</p>
           </ng-container>
         </div>
       </div>
@@ -74,7 +74,7 @@
     (click)="editMovie()"
     mat-fab
     class="edit-button"
-    aria-label="edit film button"
+    aria-label="edit movie button"
   >
     <mat-icon>edit</mat-icon>
   </button>
@@ -82,7 +82,7 @@
     (click)="deleteMovie()"
     mat-fab
     class="delete-button"
-    aria-label="delete film button"
+    aria-label="delete movie button"
   >
     <mat-icon>delete</mat-icon>
   </button>

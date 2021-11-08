@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { RequestService } from '../../../core/services/request/request.service';
 import { Movie } from '../../../core/models/movies';
 import { EventsService } from '../../../core/services/events/events.service';
 import { Subscription } from 'rxjs';

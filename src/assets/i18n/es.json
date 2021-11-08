@@ -24,6 +24,6 @@
   "movies.form.score.placeholder": "Añade un puntuación",
   "shared.components.cards.noGenres": "No se han encontrado géneros",
   "shared.components.cards.noActors": "No se han encontrado actores",
-  "shared.components.cards.companies": "No se ha encontrado compañias",
+  "shared.components.cards.companies": "No se han encontrado compañias",
   "spinner.text": "Cargando..."
 }

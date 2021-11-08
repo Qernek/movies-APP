@@ -13,7 +13,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class SpinnerInterceptor implements HttpInterceptor {
   private countRequest = 0;
 
-  constructor(private spinner: NgxSpinnerService) {}
+  constructor(private readonly spinner: NgxSpinnerService) {}
 
   intercept(
     request: HttpRequest<unknown>,

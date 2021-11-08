@@ -12,6 +12,7 @@ import {
   HTTP_INTERCEPTORS,
 } from '@angular/common/http';
 import { SpinnerInterceptor } from './core/interceptors/spinner.interceptor';
+import { HttpErrorInterceptor } from './core/interceptors/http-error.interceptor';
 
 @NgModule({
   declarations: [],
@@ -35,12 +36,16 @@ import { SpinnerInterceptor } from './core/interceptors/spinner.interceptor';
       useClass: SpinnerInterceptor,
       multi: true,
     },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
 
-// The HttpLoaderFactory is required for AOT (ahead of time) compilation in the project
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
 }
