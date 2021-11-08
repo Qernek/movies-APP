@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Companies } from '../models/companies';
+import { Companie } from '../models/companie';
 
 /**
  * Pipe to search the actor in actorList by the id
@@ -10,9 +10,9 @@ import { Companies } from '../models/companies';
   pure: true,
 })
 export class CompaniesById implements PipeTransform {
-  companie: Companies | undefined;
+  companie: Companie | undefined;
 
-  transform(companieId: number | string, companiesList: Companies[]) {
+  transform(companieId: number | string, companiesList: Companie[]) {
     this.companie = companiesList.find(
       (companie) => companie.id === +companieId
     );

@@ -38,10 +38,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
    * subscription to keep the movie list updated
    */
   movieDataSubscription() {
-    this.moviesSubscription = this.eventsService.moviesList.subscribe(
-      (movies: Movie[]) => {
+    this.moviesSubscription = this.eventsService
+      .getMoviesList()
+      .subscribe((movies: Movie[]) => {
         this.moviesList = movies;
-      }
-    );
+      });
   }
 }

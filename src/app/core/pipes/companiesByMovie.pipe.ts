@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Companies } from '../models/companies';
+import { Companie } from '../models/companie';
 import { TranslateService } from '@ngx-translate/core';
 
 /**
@@ -14,7 +14,7 @@ export class CompaniesByMoviePipe implements PipeTransform {
   constructor(private readonly translateService: TranslateService) {}
   private companieName: string;
 
-  transform(movieId: number | string, companiesList: Companies[]) {
+  transform(movieId: number | string, companiesList: Companie[]) {
     for (let i = 0; i < companiesList.length; i++) {
       const companie = companiesList[i];
       for (let z = 0; z < companie.movies.length; z++) {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Actor } from '../../models/actors';
-import { Companies } from '../../models/companies';
+import { Companie } from '../../models/companie';
 import { Movie } from '../../models/movies';
 
 @Injectable({
@@ -11,17 +11,65 @@ export class EventsService {
   /**
    * Movies data from http request
    */
-  public readonly moviesList = new BehaviorSubject<Movie[]>([]);
+  private moviesList = new BehaviorSubject<Movie[]>([]);
 
   /**
    * Actors data from http request
    */
-  public readonly actorsList = new BehaviorSubject<Actor[]>([]);
+  private actorsList = new BehaviorSubject<Actor[]>([]);
 
   /**
    * Companies data from http request
    */
-  public readonly companiesList = new BehaviorSubject<Companies[]>([]);
+  private companiesList = new BehaviorSubject<Companie[]>([]);
 
   constructor() {}
+
+  /**
+   * Set/update movies in BehaviorSubject variable
+   * @param movies movies
+   */
+  setMoviesList(movies: Movie[]) {
+    this.moviesList.next(movies);
+  }
+
+  /**
+   * get movies data from BehaviorSubject variable
+   * @returns movies
+   */
+  getMoviesList(): Observable<Movie[]> {
+    return this.moviesList.asObservable();
+  }
+
+  /**
+   * Set/update actors in BehaviorSubject variable
+   * @param actors actors
+   */
+  setActorsList(actors: Actor[]) {
+    this.actorsList.next(actors);
+  }
+
+  /**
+   * get movies data from BehaviorSubject variable
+   * @returns actors
+   */
+  getActorsList(): Observable<Actor[]> {
+    return this.actorsList.asObservable();
+  }
+
+  /**
+   * Set/update companies in BehaviorSubject variable
+   * @param companies companies
+   */
+  setCompaniesList(companies: Companie[]) {
+    this.companiesList.next(companies);
+  }
+
+  /**
+   * get movies data from BehaviorSubject variable
+   * @returns companies
+   */
+  getCompaniesList(): Observable<Companie[]> {
+    return this.companiesList.asObservable();
+  }
 }
