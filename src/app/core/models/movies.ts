@@ -7,5 +7,5 @@ export interface Movie {
   duration: number;
   imdbRating: number;
   actors: number[];
-  companies?: number;
+  companie?: number;
 }

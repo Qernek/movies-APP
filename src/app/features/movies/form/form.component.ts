@@ -4,7 +4,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Actor } from '../../../core/models/actors';
-import { Companies } from '../../../core/models/companies';
+import { Companie } from '../../../core/models/companie';
 import { Movie } from '../../../core/models/movies';
 import { EventsService } from '../../../core/services/events/events.service';
 
@@ -20,7 +20,7 @@ export class FormComponent implements OnInit, OnDestroy {
   private moviesList: Movie[];
   private movieId: number = +this.activatedroute.snapshot.paramMap.get('id')!;
   isCreation: boolean;
-  companiesList: Companies[];
+  companiesList: Companie[];
   movie: Movie | undefined;
   actorsList: Actor[];
   actorsSelectData: number[] = [];
@@ -36,7 +36,7 @@ export class FormComponent implements OnInit, OnDestroy {
     duration: new FormControl(),
     imdbRating: new FormControl(),
     actors: new FormControl([]),
-    companies: new FormControl(),
+    companie: new FormControl(),
   });
 
   constructor(
@@ -65,7 +65,7 @@ export class FormComponent implements OnInit, OnDestroy {
     let newMovie: Movie[] = this.moviesList;
     this.movieForm.controls['id'].setValue(Math.floor(Math.random() * 1000));
     newMovie.push(this.movieForm.value);
-    this.eventsService.moviesList.next(newMovie);
+    this.eventsService.setMoviesList(newMovie);
     this.router.navigate(['movies']);
   }
 
@@ -105,7 +105,7 @@ export class FormComponent implements OnInit, OnDestroy {
   editMovie() {
     this.moviesList = this.moviesList.filter((movie) => movie !== this.movie);
     this.moviesList.push(this.movieForm.value);
-    this.eventsService.moviesList.next(this.moviesList);
+    this.eventsService.setMoviesList(this.moviesList);
     this.router.navigate(['movies']);
   }
 
@@ -168,35 +168,35 @@ export class FormComponent implements OnInit, OnDestroy {
    * subscription to movies data
    */
   movieDataSubscription() {
-    this.moviesSubscription = this.eventsService.moviesList.subscribe(
-      (moviesList: Movie[]) => {
+    this.moviesSubscription = this.eventsService
+      .getMoviesList()
+      .subscribe((moviesList: Movie[]) => {
         this.moviesList = moviesList;
         this.searchMovie();
-      }
-    );
+      });
   }
 
   /**
    * subscription to actors data
    */
   actorDataSubscription() {
-    this.actorsSubscription = this.eventsService.actorsList.subscribe(
-      (actorsList: Actor[]) => {
+    this.actorsSubscription = this.eventsService
+      .getActorsList()
+      .subscribe((actorsList: Actor[]) => {
         this.actorsList = actorsList;
         this.addActorsToSelect();
-      }
-    );
+      });
   }
 
   /**
    * subscription to companies data
    */
   companieDataSubscription() {
-    this.companiesSubscription = this.eventsService.companiesList.subscribe(
-      (companiesList: Companies[]) => {
+    this.companiesSubscription = this.eventsService
+      .getCompaniesList()
+      .subscribe((companiesList: Companie[]) => {
         this.companiesList = companiesList;
         this.addCompaniesToSelect();
-      }
-    );
+      });
   }
 }

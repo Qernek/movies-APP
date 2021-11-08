@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Actor } from '../../models/actors';
-import { Companies } from '../../models/companies';
+import { Companie } from '../../models/companie';
 import { Movie } from '../../models/movies';
 import { EventsService } from '../events/events.service';
 
@@ -38,8 +38,8 @@ export class RequestService {
    * get companies data
    * @returns array of companies
    */
-  private getCompanies(): Observable<Companies[]> {
-    return this.http.get<Companies[]>(this.apiURL + '/companies');
+  private getCompanies(): Observable<Companie[]> {
+    return this.http.get<Companie[]>(this.apiURL + '/companies');
   }
 
   /**
@@ -49,15 +49,15 @@ export class RequestService {
    */
   getAllData() {
     this.getMovies().subscribe((movies: Movie[]) => {
-      this.eventsService.moviesList.next(movies);
+      this.eventsService.setMoviesList(movies);
     });
 
-    this.getCompanies().subscribe((companies: Companies[]) => {
-      this.eventsService.companiesList.next(companies);
+    this.getCompanies().subscribe((companies: Companie[]) => {
+      this.eventsService.setCompaniesList(companies);
     });
 
     this.getActors().subscribe((actors: Actor[]) => {
-      this.eventsService.actorsList.next(actors);
+      this.eventsService.setActorsList(actors);
     });
   }
 }

@@ -4,7 +4,7 @@ import { EventsService } from '../../../core/services/events/events.service';
 import { Movie } from '../../../core/models/movies';
 import { Subscription } from 'rxjs';
 import { Actor } from '../../../core/models/actors';
-import { Companies } from '../../../core/models/companies';
+import { Companie } from '../../../core/models/companie';
 
 @Component({
   selector: 'app-details',
@@ -19,7 +19,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   movie: Movie;
   movieId: number = +this.activatedroute.snapshot.paramMap.get('id')!;
   actorsList: Actor[];
-  companiesList: Companies[];
+  companiesList: Companie[];
   noImage: string =
     'https://dummyimage.com/400x600.png/dddddd/000000&text=No+image+available';
 
@@ -44,7 +44,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   /**
    * go to edit page of the movie
    */
-  editMovie() {
+  navEditPage() {
     this.router.navigate(['movies/edt/', this.movieId]);
   }
 
@@ -53,7 +53,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
    */
   deleteMovie() {
     this.moviesList = this.moviesList.filter((movie) => movie !== this.movie);
-    this.eventsService.moviesList.next(this.moviesList);
+    this.eventsService.setMoviesList(this.moviesList);
     this.router.navigate(['movies']);
   }
 
@@ -61,34 +61,34 @@ export class DetailsComponent implements OnInit, OnDestroy {
    * subscription to movies data
    */
   movieDataSubscription() {
-    this.moviesSubscription = this.eventsService.moviesList.subscribe(
-      (moviesList: Movie[]) => {
+    this.moviesSubscription = this.eventsService
+      .getMoviesList()
+      .subscribe((moviesList: Movie[]) => {
         this.moviesList = moviesList;
         this.searchMovie();
-      }
-    );
+      });
   }
 
   /**
    * subscription to actors data
    */
   actorDataSubscription() {
-    this.actorsSubscription = this.eventsService.actorsList.subscribe(
-      (actorsList: Actor[]) => {
+    this.actorsSubscription = this.eventsService
+      .getActorsList()
+      .subscribe((actorsList: Actor[]) => {
         this.actorsList = actorsList;
-      }
-    );
+      });
   }
 
   /**
    * subscription to companies data
    */
   companieDataSubscription() {
-    this.companiesSubscription = this.eventsService.companiesList.subscribe(
-      (companiesList: Companies[]) => {
+    this.companiesSubscription = this.eventsService
+      .getCompaniesList()
+      .subscribe((companiesList: Companie[]) => {
         this.companiesList = companiesList;
-      }
-    );
+      });
   }
 
   /**
